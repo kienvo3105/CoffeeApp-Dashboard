@@ -1,10 +1,10 @@
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Breadcrumb, Table, Button, Modal } from "antd";
 import React from "react";
-import { useGet, useDelete } from "../api";
+import { useGet, useDelete } from "../../api";
 import { useNavigate } from "react-router-dom";
 
-import { Layout } from "../Layout/Layout";
+import { Layout } from "../../Layout/Layout";
 
 export const Movie = () => {
   let navigate = useNavigate();

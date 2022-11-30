@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Col, Form, Input, notification, Row, Upload } from "antd";
 
-import { usePost } from "../api";
-import { Layout } from "../Layout/Layout";
+import { usePost } from "../../api";
+import { Layout } from "../../Layout/Layout";
 import S3FileUpload from "react-s3";
 import { Buffer } from "buffer";
 

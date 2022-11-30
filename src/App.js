@@ -4,9 +4,11 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "./Pages/Login";
 import { PrivatePage } from "./Pages/PrivatePage";
 import { NotFound } from "./Pages/NotFound";
-import { Movie } from "./Pages/Movie";
+import { Movie } from "./Pages/movie/Movie";
 import { ChangePassword } from "./Pages/ChangePassword";
-import { AddMovie } from "./Pages/AddMovie";
+import { AddMovie } from "./Pages/movie/AddMovie";
+import { Province } from "./Pages/province/Province";
+import { Cinema } from "./Pages/cinema/Cinema";
 
 const App = () => {
   return (
@@ -19,14 +21,6 @@ const App = () => {
           </PrivatePage>
         }
       ></Route>
-      <Route
-        path="locations"
-        element={
-          <PrivatePage>
-            <Locations />
-          </PrivatePage>
-        }
-      />
       <Route
         path="movie"
         element={
@@ -43,6 +37,23 @@ const App = () => {
           </PrivatePage>
         }
       />
+      <Route
+        path="province"
+        element={
+          <PrivatePage>
+            <Province />
+          </PrivatePage>
+        }
+      />
+      <Route
+        path="cinema"
+        element={
+          <PrivatePage>
+            <Cinema />
+          </PrivatePage>
+        }
+      />
+
       <Route path="/login" element={<Login />} />
       <Route path="/changepassword" element={<ChangePassword />} />
       <Route path="*" element={<NotFound />}></Route>

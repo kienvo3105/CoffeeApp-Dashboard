@@ -1,7 +1,6 @@
 import React from "react";
 import { Menu, Layout } from "antd";
-import { DesktopOutlined, CompassOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 function getItem(label, key, icon, children) {
   return {
@@ -12,13 +11,15 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("Locations", "location", <CompassOutlined />),
-  getItem("Classes", "class", <DesktopOutlined />),
+  getItem("Province", "province"),
+  getItem("Cinema", "cinema"),
   getItem("Movie", "movie"),
 ];
 export const Sider = () => {
   const [collapsed, setCollapsed] = React.useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   return (
     <Layout.Sider
       theme="light"
@@ -29,7 +30,7 @@ export const Sider = () => {
     >
       <Menu
         theme="light"
-        defaultSelectedKeys={["1"]}
+        defaultSelectedKeys={pathname}
         mode="inline"
         items={items}
         onClick={(item) => {
@@ -37,8 +38,14 @@ export const Sider = () => {
             case "movie":
               navigate("/movie");
               break;
+            case "province":
+              navigate("/province");
+              break;
+            case "cinema":
+              navigate("/cinema");
+              break;
             default:
-              navigate("/locations");
+              navigate("/movie");
           }
         }}
       />
