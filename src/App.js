@@ -1,5 +1,4 @@
 import React from "react";
-import { Locations } from "./Pages/Locations";
 import { Route, Routes } from "react-router-dom";
 import { Login } from "./Pages/Login";
 import { PrivatePage } from "./Pages/PrivatePage";
@@ -9,6 +8,8 @@ import { ChangePassword } from "./Pages/ChangePassword";
 import { AddMovie } from "./Pages/movie/AddMovie";
 import { Province } from "./Pages/province/Province";
 import { Cinema } from "./Pages/cinema/Cinema";
+import { AddCinema } from "./Pages/cinema/AddCinema";
+import { AddProvince } from "./Pages/province/AddProvince";
 
 const App = () => {
   return (
@@ -46,10 +47,26 @@ const App = () => {
         }
       />
       <Route
+        path="province/add"
+        element={
+          <PrivatePage>
+            <AddProvince />
+          </PrivatePage>
+        }
+      />
+      <Route
         path="cinema"
         element={
           <PrivatePage>
             <Cinema />
+          </PrivatePage>
+        }
+      />
+      <Route
+        path="cinema/add"
+        element={
+          <PrivatePage>
+            <AddCinema />
           </PrivatePage>
         }
       />

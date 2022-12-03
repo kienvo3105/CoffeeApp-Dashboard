@@ -46,6 +46,26 @@ export const Movie = () => {
       key: "duration",
     },
     {
+      title: "Ngày khỏi chiếu",
+      dataIndex: "releaseDate",
+      key: "releaseDate",
+    },
+    {
+      title: "Ngôn ngữ",
+      dataIndex: "language",
+      key: "language",
+    },
+    {
+      title: "Đạo diễn",
+      dataIndex: "director",
+      key: "director",
+    },
+    {
+      title: "Diễn viên",
+      dataIndex: "actors",
+      key: "actors",
+    },
+    {
       title: "Thể loại",
       dataIndex: "genre",
       key: "genre",

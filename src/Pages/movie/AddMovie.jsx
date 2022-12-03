@@ -1,5 +1,14 @@
 import React from "react";
-import { Button, Col, Form, Input, notification, Row, Upload } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  notification,
+  Upload,
+  Select,
+  DatePicker,
+  InputNumber,
+} from "antd";
 
 import { usePost } from "../../api";
 import { Layout } from "../../Layout/Layout";
@@ -13,9 +22,23 @@ const config = {
   bucketName: "ie104",
   dirName: "images",
   region: "ap-southeast-1",
-  accessKeyId: "AKIA2F4RQQUOW5OCZMEE",
-  secretAccessKey: "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",
+  accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
+  secretAccessKey: process.env.REACT_APP_S3_SECRET_KEY,
 };
+
+const genreOptions = [
+  { value: "Hành động", id: 0 },
+  { value: "Tình cảm", id: 1 },
+  { value: "Hài", id: 2 },
+  { value: "Kinh dị", id: 3 },
+  { value: "Khoa học viễn tưởng", id: 4 },
+  { value: "Hoạt hình", id: 5 },
+  { value: "Tâm Lý", id: 6 },
+  { value: "Tội phạm", id: 7 },
+  { value: "Phim tài liệu", id: 8 },
+  { value: "Phiêu Lưu", id: 9 },
+  { value: "Thần thoại", id: 10 },
+];
 
 export const AddMovie = () => {
   const [imageUrl, setImageUrl] = React.useState();
@@ -38,137 +61,165 @@ export const AddMovie = () => {
   };
   console.log(imageUrl);
   const onFinish = (values) => {
+    console.log(values.genre.toString());
+
+    console.log();
     fetchPost("movie", {
       ...values,
       image: imageUrl,
+      releaseDate: values.date._d.toISOString(),
     });
   };
+  const dateFormat = "DD/MM/YYYY";
+
   React.useEffect(() => {
     openNotificationWithIcon("success", "Add user successfully");
   }, [result]);
-  const uploadButton = (
-    <div>
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
   return (
     <Layout>
       <div className="relative w-full min-h-screen m-0 p-0 bg-[#e5e7eb]">
         <div className=" m-5  left-0 pt-[100px] pb-[100px] pl-[50px] pr-[50px] bg-[white]">
-          <h1 className="text-center text-[40px] mb-[30px]">Add new movie</h1>
-          <Row>
-            <Col span={8} className="">
+          <Form
+            name="AddUser"
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            autoComplete="off"
+          >
+            <Form.Item
+              label="Tên phim"
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập tên phim",
+                },
+              ]}
+            >
+              <Input placeholder="Nhập tên phim" />
+            </Form.Item>
+
+            <Form.Item
+              label="Đạo diễn"
+              name="director"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui Lòng nhập tên đạo diễn",
+                },
+              ]}
+            >
+              <Input placeholder="Vui Lòng nhập tên đạo diễn" />
+            </Form.Item>
+            <Form.Item
+              label="Diễn viên"
+              name="actors"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập các diễn viên",
+                },
+              ]}
+            >
+              <Input placeholder="Vui lòng nhập các diễn viên" />
+            </Form.Item>
+            <Form.Item
+              label="Thể loại"
+              name="genre"
+              rules={[
+                {
+                  required: true,
+                  message: "",
+                },
+              ]}
+            >
+              <Select
+                mode="multiple"
+                placeholder="Chọn thể loại"
+                filterOption={(input, option) =>
+                  (option?.label ?? "")
+                    .toLowerCase()
+                    .includes(input.toLowerCase())
+                }
+                options={genreOptions}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Ngày khởi chiếu"
+              name="date"
+              rules={[
+                {
+                  required: true,
+                  message: "",
+                },
+              ]}
+            >
+              <DatePicker format={dateFormat} />
+            </Form.Item>
+            <Form.Item
+              label="Thời lượng"
+              name="duration"
+              rules={[
+                {
+                  required: true,
+                  message: "Thời lượng phim",
+                },
+              ]}
+            >
+              <InputNumber
+                min="0"
+                type="Number"
+                placeholder="Thời lượng phim"
+              />
+            </Form.Item>
+            <Form.Item
+              label="Ngôn ngữ"
+              name="language"
+              rules={[
+                {
+                  required: true,
+                  message: "Nhập ngôn ngữ",
+                },
+              ]}
+            >
+              <Input placeholder="Ngôn ngữ" />
+            </Form.Item>
+            <Form.Item
+              label="Hình ảnh"
+              name="image"
+              rules={[
+                {
+                  required: true,
+                  message: "Chọn hình ảnh",
+                },
+              ]}
+            >
               <Upload showUploadList={false} name="file" onChange={upload}>
                 {imageUrl ? (
-                  <img src={imageUrl} alt="avatar" className="w-[80%]" />
+                  <img
+                    src={imageUrl}
+                    alt="hinh anh"
+                    className="max-w-[300px]"
+                  />
                 ) : (
-                  uploadButton
+                  <Button> Tải ảnh lên</Button>
                 )}
               </Upload>
-            </Col>
-            <Col span={16}>
-              <Form
-                name="AddUser"
-                labelCol={{ span: 6 }}
-                wrapperCol={{ span: 18 }}
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                autoComplete="off"
+            </Form.Item>
+
+            <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
+              <Button
+                id="AddUser"
+                type="primary"
+                htmlType="submit"
+                style={{ width: "100%" }}
+                loading={isLoading}
               >
-                <Form.Item
-                  label="name"
-                  name="name"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your email",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter your email" />
-                </Form.Item>
-
-                <Form.Item
-                  label="director"
-                  name="director"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input first name",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter your first name" />
-                </Form.Item>
-                <Form.Item
-                  label="actors"
-                  name="actors"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input last name",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter your last name" />
-                </Form.Item>
-                <Form.Item
-                  label="genre"
-                  name="genre"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input last name",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter your last name" />
-                </Form.Item>
-                <Form.Item
-                  label="duration"
-                  name="duration"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please input last name",
-                    },
-                  ]}
-                >
-                  <Input type="Number" placeholder="Enter your last name" />
-                </Form.Item>
-                <Form.Item
-                  label="language"
-                  name="language"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input last name",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Enter your last name" />
-                </Form.Item>
-
-                <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
-                  <Button
-                    id="AddUser"
-                    type="primary"
-                    htmlType="submit"
-                    style={{ width: "100%" }}
-                    loading={isLoading}
-                  >
-                    AddUser
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Col>
-          </Row>
+                Thêm phim mới
+              </Button>
+            </Form.Item>
+          </Form>
         </div>
       </div>
     </Layout>

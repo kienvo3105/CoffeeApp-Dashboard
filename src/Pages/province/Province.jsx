@@ -14,7 +14,7 @@ export const Province = () => {
 
   const showConfirm = (id) => {
     confirm({
-      title: "Do you Want to delete this province?",
+      title: "Bạn có muốn xóa tỉnh này không?",
       icon: <ExclamationCircleOutlined />,
       onOk: async () => {
         await fetchDelete("province/" + id);
@@ -28,28 +28,11 @@ export const Province = () => {
 
   const columns = [
     {
-      title: "Phim",
+      title: "Tỉnh",
       dataIndex: "name",
       key: "name",
     },
-    {
-      title: "Banner",
-      dataIndex: "image",
-      key: "image",
-      render: (image) => {
-        return <img src={image} alt="" className="h-[50px]" />;
-      },
-    },
-    {
-      title: "Thời lượng",
-      dataIndex: "duration",
-      key: "duration",
-    },
-    {
-      title: "Thể loại",
-      dataIndex: "genre",
-      key: "genre",
-    },
+
     {
       key: "action",
       render: (_, record) => {
