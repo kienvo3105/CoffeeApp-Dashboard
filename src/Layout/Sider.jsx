@@ -15,6 +15,7 @@ const items = [
   getItem("Rạp chiếu", "cinema"),
   getItem("Phim", "movie"),
   getItem("Phòng", "room"),
+  getItem("Suất chiếu", "showtime"),
 ];
 export const Sider = () => {
   const [collapsed, setCollapsed] = React.useState(false);
@@ -47,6 +48,9 @@ export const Sider = () => {
               break;
             case "room":
               navigate("/room");
+              break;
+            case "showtime":
+              navigate("/showtime");
               break;
             default:
               navigate("/movie");

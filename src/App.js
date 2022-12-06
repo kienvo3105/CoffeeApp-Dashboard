@@ -12,6 +12,7 @@ import { AddCinema } from "./Pages/cinema/AddCinema";
 import { AddProvince } from "./Pages/province/AddProvince";
 import { AddRoom } from "./Pages/room/AddRoom";
 import { Room } from "./Pages/room/Room";
+import { ShowTime } from "./Pages/showtime/ShowTime";
 
 const App = () => {
   return (
@@ -85,6 +86,14 @@ const App = () => {
         element={
           <PrivatePage>
             <AddRoom />
+          </PrivatePage>
+        }
+      />
+      <Route
+        path="showtime"
+        element={
+          <PrivatePage>
+            <ShowTime />
           </PrivatePage>
         }
       />
