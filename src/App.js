@@ -10,6 +10,8 @@ import { Province } from "./Pages/province/Province";
 import { Cinema } from "./Pages/cinema/Cinema";
 import { AddCinema } from "./Pages/cinema/AddCinema";
 import { AddProvince } from "./Pages/province/AddProvince";
+import { AddRoom } from "./Pages/room/AddRoom";
+import { Room } from "./Pages/room/Room";
 
 const App = () => {
   return (
@@ -67,6 +69,22 @@ const App = () => {
         element={
           <PrivatePage>
             <AddCinema />
+          </PrivatePage>
+        }
+      />
+      <Route
+        path="room"
+        element={
+          <PrivatePage>
+            <Room />
+          </PrivatePage>
+        }
+      />
+      <Route
+        path="room/add"
+        element={
+          <PrivatePage>
+            <AddRoom />
           </PrivatePage>
         }
       />

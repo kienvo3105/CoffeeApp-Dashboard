@@ -11,9 +11,10 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("Province", "province"),
-  getItem("Cinema", "cinema"),
-  getItem("Movie", "movie"),
+  getItem("Tỉnh", "province"),
+  getItem("Rạp chiếu", "cinema"),
+  getItem("Phim", "movie"),
+  getItem("Phòng", "room"),
 ];
 export const Sider = () => {
   const [collapsed, setCollapsed] = React.useState(false);
@@ -43,6 +44,9 @@ export const Sider = () => {
               break;
             case "cinema":
               navigate("/cinema");
+              break;
+            case "room":
+              navigate("/room");
               break;
             default:
               navigate("/movie");
