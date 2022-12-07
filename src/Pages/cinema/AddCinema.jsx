@@ -28,7 +28,7 @@ export const AddCinema = () => {
   React.useEffect(() => {
     fetchGet("province");
     // eslint-disable-next-line
-  }, []);
+  }, [])
   React.useEffect(() => {
     if (Optionsresult) {
       const newOptions = Optionsresult.map((option) => {

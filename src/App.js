@@ -13,7 +13,7 @@ import { AddProvince } from "./Pages/province/AddProvince";
 import { AddRoom } from "./Pages/room/AddRoom";
 import { Room } from "./Pages/room/Room";
 import { ShowTime } from "./Pages/showtime/ShowTime";
-
+import { AddShowTime } from "./Pages/showtime/AddShowTime";
 const App = () => {
   return (
     <Routes>
@@ -94,6 +94,15 @@ const App = () => {
         element={
           <PrivatePage>
             <ShowTime />
+          </PrivatePage>
+        }
+      />
+
+      <Route
+        path="showtime/add"
+        element={
+          <PrivatePage>
+            <AddShowTime />
           </PrivatePage>
         }
       />
