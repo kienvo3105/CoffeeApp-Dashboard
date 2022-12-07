@@ -66,9 +66,31 @@ export const Movie = () => {
       key: "actors",
     },
     {
+      title: "Kiểm duyệt",
+      dataIndex: "rated",
+      key: "rated",
+    },
+    {
+      title: "Link trailer",
+      dataIndex: "trailer_url",
+      key: "trailer_url",
+      render: (value) => {
+        return (
+          <a target="_blank" rel="noreferrer" href={value}>
+            {value}
+          </a>
+        );
+      },
+    },
+    {
       title: "Thể loại",
       dataIndex: "genre",
       key: "genre",
+    },
+    {
+      title: "Mô tả",
+      dataIndex: "description",
+      key: "description",
     },
     {
       key: "action",

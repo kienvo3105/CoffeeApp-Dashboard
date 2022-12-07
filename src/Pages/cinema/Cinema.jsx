@@ -42,7 +42,7 @@ export const Cinema = () => {
       title: "Tỉnh",
       dataIndex: "province",
       key: "province",
-      render: (province) => province.name,
+      render: (province) => province?.name,
     },
     {
       key: "action",
