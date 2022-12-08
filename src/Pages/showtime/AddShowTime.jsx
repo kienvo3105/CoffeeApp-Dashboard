@@ -7,6 +7,7 @@ import { Layout } from "../../Layout/Layout";
 export const AddShowTime = () => {
 
     const { fetchGet, result: Optionsresult } = useGet();
+    const { fetchGet: fetchgetProvince, result: OptionsresultCinema } = useGet();
     const [options, setOptions] = React.useState(undefined);
     const [optionsCinema, setOptionsCinema] = React.useState(undefined);
     const { fetchPost, isLoading, result } = usePost();
@@ -33,7 +34,7 @@ export const AddShowTime = () => {
     }, [])
     React.useEffect(() => {
         if (Optionsresult) {
-            const newOptions = Optionsresult.map((option) => {
+            const newOptions = Optionsresult?.map((option) => {
                 return {
                     label: option.name,
                     value: option._id,
@@ -41,27 +42,33 @@ export const AddShowTime = () => {
                 };
             });
             setOptions(newOptions);
+
+
         }
         // eslint-disable-next-line
     }, [Optionsresult]);
 
-    React.useEffect(() => {
-        fetchGet("cinema");
-        // eslint-disable-next-line
-    }, [])
+    const fetchProvince = (id) => {
+        fetchgetProvince("province/" + id)
+    }
 
     React.useEffect(() => {
-        if (Optionsresult) {
-            const newOptions = Optionsresult.map((option) => {
+        if (OptionsresultCinema) {
+
+            //cinema
+            const cinema = OptionsresultCinema?.cinemas?.map((option) => {
                 return {
                     label: option.name,
                     value: option._id,
                 };
             });
-            setOptionsCinema(newOptions);
+            console.log(cinema);
+            console.log(OptionsresultCinema);
+            setOptionsCinema(cinema);
         }
         // eslint-disable-next-line
-    }, [Optionsresult]);
+    }, [OptionsresultCinema]);
+
     return (
         <Layout>
 
@@ -105,6 +112,10 @@ export const AddShowTime = () => {
                                         .toLowerCase()
                                         .includes(input.toLowerCase())
                                 }
+                                onChange={(e) => {
+                                    fetchProvince(e);
+
+                                }}
                                 options={options}
                             />
                         </Form.Item>
@@ -115,7 +126,7 @@ export const AddShowTime = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: "Vui lòng chọn tỉnh",
+                                    message: "Vui lòng chọn Rạp",
                                 },
                             ]}
                         >
