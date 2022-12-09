@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input, notification, Select, DatePicker, TimePicker } from "antd";
+import { Button, Form, notification, Select, DatePicker, TimePicker } from "antd";
 
 import { usePost, useGet } from "../../api";
 import { Layout } from "../../Layout/Layout";
@@ -11,10 +11,13 @@ export const AddShowTime = () => {
     const { fetchGet: fetchgetProvince, result: OptionsresultCinema } = useGet();
     const { fetchGet: fetchgetMovie, result: OptionsresultMovie } = useGet();
     const { fetchGet: fetchgetRoom, result: OptionsresultRoom } = useGet();
+    const { fetchGet: fetchgetShowTime, result: OptionsresultShowTime } = useGet();
     const [options, setOptions] = React.useState(undefined);
     const [optionsCinema, setOptionsCinema] = React.useState(undefined);
     const [optionsMovie, setOptionsMovie] = React.useState(undefined);
     const [optionsRoom, setOptionsRoom] = React.useState(undefined);
+    const [optionsShowTime, setOptionsShowTime] = React.useState(undefined);
+    const [room, setRoom] = React.useState(undefined);
     const { fetchPost, isLoading, result } = usePost();
     const openNotificationWithIcon = (type, message = "", des = "") => {
         notification[type]({
@@ -104,9 +107,9 @@ export const AddShowTime = () => {
 
 
     const fetchRoom = (id) => {
+
         fetchgetRoom("cinema/" + id);
     }
-
 
     React.useEffect(() => {
         if (OptionsresultRoom) {
@@ -124,6 +127,31 @@ export const AddShowTime = () => {
         }
         // eslint-disable-next-line
     }, [OptionsresultRoom]);
+
+    const fetchShowtime = (id) => {
+        setRoom(id);
+        fetchgetShowTime("showtime");
+    }
+
+    React.useEffect(() => {
+        if (OptionsresultShowTime) {
+
+            //cinema
+            const showtime = OptionsresultShowTime?.filter((option) => {
+                return (option.roomId === room)
+
+            }).map((option) => {
+                return {
+                    time: option.time,
+                    time_end: option.time_end,
+                    value: option._id,
+                };
+            })
+            console.log(showtime);
+            setOptionsShowTime(showtime);
+        }
+        // eslint-disable-next-line
+    }, [OptionsresultShowTime]);
 
     return (
         <Layout>
@@ -241,7 +269,7 @@ export const AddShowTime = () => {
                                         .toLowerCase()
                                         .includes(input.toLowerCase())
                                 }
-
+                                onChange={fetchShowtime}
                                 options={optionsRoom}
                             />
                         </Form.Item>

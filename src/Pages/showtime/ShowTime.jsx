@@ -52,6 +52,7 @@ export const ShowTime = () => {
   ]);
 
   const [date, setDate] = React.useState(Dates[0].date);
+  const [provinceId, setProvinceId] = React.useState("");
 
 
 
@@ -82,19 +83,13 @@ export const ShowTime = () => {
     fetchgetProvince("province/" + id)
   }
   const fetchShowtime = (id) => {
-    fetchGetShowtime("showtime/")
+
   }
 
   React.useEffect(() => {
-    if (OptionsresultCinema) {
-
-      //cinema
-      const cinema = OptionsresultCinema?.cinemas
-
-      setOptionsCinema(cinema);
-    }
+    fetchGetShowtime(`showtime/null/${provinceId}/${date}`)
     // eslint-disable-next-line
-  }, [OptionsresultCinema]);
+  }, [provinceId, date]);
 
 
 
@@ -125,7 +120,7 @@ export const ShowTime = () => {
                 onClick={() => setDate(item.date)}
                 type="button"
                 key={item.id}
-                className="ml-5 border bg-sky-700 hover:bg-sky-300 text-white h-[50px] w-[100px] rounded-xl"
+                className={`ml-5 border ${item.date === date ? "bg-sky-700" : "bg-red-500"}  hover:bg-sky-300 text-white h-[50px] w-[100px] rounded-xl`}
 
               >
                 {item.time}
@@ -136,7 +131,7 @@ export const ShowTime = () => {
           <div className="py-5">
             {Optionsresult && Optionsresult.map((item) => (
               <button
-                onClick={() => fetchProvince(item._id)}
+                onClick={() => setProvinceId(item._id)}
                 type="button"
                 key={item._id}
                 className="ml-5 border hover:bg-sky-300  text-white h-[50px] w-[100px] rounded-xl"
@@ -149,21 +144,21 @@ export const ShowTime = () => {
             ))}
           </div>
           <div>
-            {optionsCinema && optionsCinema.map((item) => (
+            {showtimeResult && showtimeResult.map((item) => (
               <div className="border-t-2 border-slate-600 py-5 mx-[50px]">
                 <div onClick={() => {
                   fetchShowtime()
-                }} className="text-[30px] mb-[20px]">{item.name}</div>
-                {/* {item.time.map((temp, index) => (
+                }} className="text-[30px] mb-[20px]">{item?.cinema?.name}</div>
+                {item.showtimes.map((temp, index) => (
                   <button
-                    
+
                     type="button"
                     key={index}
                     className="ml-5 border bg-gray-700 hover:bg-sky-300 text-white h-[50px] w-[100px]"
                   >
-                    {temp}
+                    {temp.time}
                   </button>
-                ))} */}
+                ))}
               </div>
             ))}
           </div>
