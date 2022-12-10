@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, notification, Select, DatePicker, TimePicker } from "antd";
+import { Button, Form, notification, Select, DatePicker, TimePicker, Space } from "antd";
 
 import { usePost, useGet } from "../../api";
 import { Layout } from "../../Layout/Layout";
@@ -17,7 +17,9 @@ export const AddShowTime = () => {
     const [optionsMovie, setOptionsMovie] = React.useState(undefined);
     const [optionsRoom, setOptionsRoom] = React.useState(undefined);
     const [optionsShowTime, setOptionsShowTime] = React.useState(undefined);
-    const [room, setRoom] = React.useState(undefined);
+    const [date, setDate] = React.useState("");
+    const [cinema, setCinema] = React.useState("");
+    const [provinceId, setProvinceId] = React.useState("");
     const { fetchPost, isLoading, result } = usePost();
     const openNotificationWithIcon = (type, message = "", des = "") => {
         notification[type]({
@@ -25,6 +27,7 @@ export const AddShowTime = () => {
             description: des,
         });
     };
+
     const onFinish = (values) => {
         //console.log(values.Date._d.toISOString());
         console.log(values.Time._d.getHours() + ":" + values.Time._d.getMinutes());
@@ -38,10 +41,13 @@ export const AddShowTime = () => {
             date: values.Date._d.toISOString(),
             time: values.Time._d.getHours() + ":" + values.Time._d.getMinutes()
         });
+
+
     };
 
     React.useEffect(() => {
         openNotificationWithIcon("success", "Thêm xuất chiếu mới thành công");
+        fetchShowtime();
     }, [result]);
 
     React.useEffect(() => {
@@ -86,6 +92,7 @@ export const AddShowTime = () => {
     }, [Optionsresult]);
 
     const fetchProvince = (id) => {
+        setProvinceId(id);
         fetchgetProvince("province/" + id)
     }
 
@@ -107,7 +114,7 @@ export const AddShowTime = () => {
 
 
     const fetchRoom = (id) => {
-
+        setCinema(id);
         fetchgetRoom("cinema/" + id);
     }
 
@@ -128,27 +135,38 @@ export const AddShowTime = () => {
         // eslint-disable-next-line
     }, [OptionsresultRoom]);
 
-    const fetchShowtime = (id) => {
-        setRoom(id);
-        fetchgetShowTime("showtime");
+    const fetchShowtime = () => {
+        // fetchgetShowTime("showtime");
+        fetchgetShowTime(`showtime/null/${provinceId}/${date}`);
     }
 
     React.useEffect(() => {
         if (OptionsresultShowTime) {
 
             //cinema
-            const showtime = OptionsresultShowTime?.filter((option) => {
-                return (option.roomId === room)
-
-            }).map((option) => {
-                return {
-                    time: option.time,
-                    time_end: option.time_end,
-                    value: option._id,
-                };
-            })
+            const getCinema = OptionsresultShowTime.filter((option) => { return option.cinema._id === cinema });
+            // console.log(getCinema);
+            const showtime = getCinema[0].showtimes;
             console.log(showtime);
-            setOptionsShowTime(showtime);
+            const showtimeRoom = optionsRoom.map((room) => {
+                const getShowtimeForRoom = showtime.filter((option) => {
+                    //console.log(option.roomId._id);
+                    return option.roomId._id === room.value;
+                })
+                const time = getShowtimeForRoom.map((option) => {
+                    return option.time + " -> " + option.time_end;
+                });
+                return {
+                    label: room.label,
+                    value: room.value,
+                    time: time,
+                }
+
+            });
+            console.log(showtimeRoom);
+            // console.log(showtime);
+            // console.log(OptionsresultShowTime);
+            setOptionsShowTime(showtimeRoom);
         }
         // eslint-disable-next-line
     }, [OptionsresultShowTime]);
@@ -197,7 +215,14 @@ export const AddShowTime = () => {
                                 },
                             ]}
                         >
-                            <DatePicker format={dateFormat} />
+                            <DatePicker format={dateFormat} onChange={(date) => {
+                                const temp = new Date(date);
+                                temp.setHours(7);
+                                temp.setMinutes(0);
+                                temp.setSeconds(1)
+                                setDate(temp.toISOString());
+                                fetchShowtime();
+                            }} />
                         </Form.Item>
 
                         <Form.Item
@@ -219,6 +244,7 @@ export const AddShowTime = () => {
                                 }
                                 onChange={(e) => {
                                     fetchProvince(e);
+                                    // fetchShowtime();
 
                                 }}
                                 options={options}
@@ -245,13 +271,39 @@ export const AddShowTime = () => {
                                 onChange={(e) => {
                                     console.log(e);
                                     fetchRoom(e);
-
-
+                                    fetchShowtime();
                                 }}
                                 options={optionsCinema}
                             />
                         </Form.Item>
+                        <Form.Item>
+                            <div>
 
+                                {optionsShowTime && optionsShowTime.map((room) => {
+                                    return (
+                                        <div className="border-t-2 border-slate-600 py-2 ml-[30%] mr-0">
+                                            <div className="text-[15px] mb-[5px]">Room {room.label}</div>
+                                            <Space>
+                                                {room.time.map((showtime, index) => {
+                                                    return (
+                                                        <div
+                                                            key={index}
+                                                            className="ml-1 border bg-gray-700 hover:bg-sky-300 text-white h-[30px] w-[80px] text-center relative pt-[5px] text-[12px]"
+                                                        >
+
+                                                            {showtime}
+                                                        </div>
+                                                    )
+
+                                                })}
+                                            </Space>
+
+                                        </div>)
+
+                                })}
+
+                            </div>
+                        </Form.Item>
                         <Form.Item
                             label="Phòng"
                             name="roomId"
@@ -269,7 +321,7 @@ export const AddShowTime = () => {
                                         .toLowerCase()
                                         .includes(input.toLowerCase())
                                 }
-                                onChange={fetchShowtime}
+
                                 options={optionsRoom}
                             />
                         </Form.Item>

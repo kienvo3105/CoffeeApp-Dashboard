@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { Layout } from "../../Layout/Layout";
 
 import React from "react";
-import { Button, Form, Input, notification, Select, Breadcrumb } from "antd";
+import { Button, Space, Breadcrumb, Modal } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
-import { useGet } from "../../api";
+import { useGet, useDelete } from "../../api";
 const Dates = [];
 for (let i = 0; i <= 6; i++) {
   const toDate = new Date();
@@ -30,70 +31,44 @@ for (let i = 0; i <= 6; i++) {
 
 export const ShowTime = () => {
   let navigate = useNavigate();
+  const { confirm } = Modal;
+  const { fetchDelete, isLoading: isDeleteLoading } = useDelete();
 
-  let getIdCity = 1;
-  let getIdDate = 1;
 
-  const [ShowTime, setShowTime] = React.useState([
-    {
-      name: "Hà Nội 1",
-      id: 1,
-      idCity: 1,
-      idDate: 1,
-      time: ["9h30 AM", "10h AM", "11h30 AM", "1h PM"],
-    },
-    {
-      name: "Hà Nội 2",
-      id: 4,
-      idCity: 1,
-      idDate: 1,
-      time: ["9h30 AM", "10h AM", "11h30 AM", "1h PM"],
-    },
-  ]);
 
   const [date, setDate] = React.useState(Dates[0].date);
-  const [provinceId, setProvinceId] = React.useState("");
-
-
-
-  const [clickedCity, getclickedCity] = React.useState(1);
-  const getShowtime = (id) => {
-    getIdCity = id;
-    getclickedCity(id);
-    console.log("getShowTime " + id);
-
-  };
+  console.log(Dates[1].date);
+  const [provinceId, setProvinceId] = React.useState("638f61dceae6921efd78e7b4");
 
 
   const { fetchGet, result: Optionsresult } = useGet();
-  const { fetchGet: fetchgetProvince, result: OptionsresultCinema } = useGet();
   const { fetchGet: fetchGetShowtime, result: showtimeResult } = useGet();
-  const [optionsCinema, setOptionsCinema] = React.useState(undefined);
 
 
-
-
+  const showConfirm = (id) => {
+    confirm({
+      title: "Do you Want to delete this movie?",
+      icon: <ExclamationCircleOutlined />,
+      onOk: async () => {
+        await fetchDelete("showtime/" + id);
+        fetchGetShowtime(`showtime/null/${provinceId}/${date}`)
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
+  };
 
   React.useEffect(() => {
     fetchGet("province");
     // eslint-disable-next-line
   }, [])
 
-  const fetchProvince = (id) => {
-    fetchgetProvince("province/" + id)
-  }
-  const fetchShowtime = (id) => {
-
-  }
 
   React.useEffect(() => {
     fetchGetShowtime(`showtime/null/${provinceId}/${date}`)
     // eslint-disable-next-line
   }, [provinceId, date]);
-
-
-
-
 
 
   React.useEffect(() => {
@@ -103,6 +78,10 @@ export const ShowTime = () => {
     // eslint-disable-next-line
   }, [showtimeResult]);
 
+  const DateClicked = (date) => {
+    setDate(date);
+    setProvinceId("638f61dceae6921efd78e7b4");
+  }
 
   return (
     <Layout>
@@ -117,10 +96,10 @@ export const ShowTime = () => {
           <div className="border-y-4 border-black py-5">
             {Dates.map((item) => (
               <button
-                onClick={() => setDate(item.date)}
+                onClick={() => DateClicked(item.date)}
                 type="button"
                 key={item.id}
-                className={`ml-5 border ${item.date === date ? "bg-sky-700" : "bg-red-500"}  hover:bg-sky-300 text-white h-[50px] w-[100px] rounded-xl`}
+                className={`ml-5 border ${item.date === date ? "bg-sky-600" : " bg-gray-400"}  hover:bg-sky-300 text-white h-[50px] w-[100px] rounded-xl`}
 
               >
                 {item.time}
@@ -134,10 +113,7 @@ export const ShowTime = () => {
                 onClick={() => setProvinceId(item._id)}
                 type="button"
                 key={item._id}
-                className="ml-5 border hover:bg-sky-300  text-white h-[50px] w-[100px] rounded-xl"
-                style={{
-                  backgroundColor: clickedCity === item._id ? "#0288D1" : "gray",
-                }}
+                className={`ml-5 border ${item._id === provinceId ? "bg-sky-600" : " bg-gray-400"} hover:bg-sky-300  text-white h-[50px] w-[100px] rounded-xl`}
               >
                 {item.name}
               </button>
@@ -146,19 +122,20 @@ export const ShowTime = () => {
           <div>
             {showtimeResult && showtimeResult.map((item) => (
               <div className="border-t-2 border-slate-600 py-5 mx-[50px]">
-                <div onClick={() => {
-                  fetchShowtime()
-                }} className="text-[30px] mb-[20px]">{item?.cinema?.name}</div>
-                {item.showtimes.map((temp, index) => (
-                  <button
+                <div className="text-[30px] mb-[20px]">{item?.cinema?.name}</div>
+                <Space>
+                  {item.showtimes.map((temp, index) => (
+                    <div
 
-                    type="button"
-                    key={index}
-                    className="ml-5 border bg-gray-700 hover:bg-sky-300 text-white h-[50px] w-[100px]"
-                  >
-                    {temp.time}
-                  </button>
-                ))}
+
+                      key={index}
+                      className="ml-5 border bg-gray-700 hover:bg-sky-300 text-white h-[50px] w-[100px] text-center pt-3 relative"
+                    >
+                      {temp.time}
+                      <div onClick={() => showConfirm(temp._id)} className="cursor-pointer w-[20px] h-[20px] bg-red-500 rounded-full absolute top-[-10px] right-[-10px] text-center">x</div>
+                    </div>
+                  ))}
+                </Space>
               </div>
             ))}
           </div>
