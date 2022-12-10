@@ -1,9 +1,8 @@
-
 import { useNavigate } from "react-router-dom";
 import { Layout } from "../../Layout/Layout";
 
 import React from "react";
-import { Button, Space, Breadcrumb, Modal } from "antd";
+import { Button, Space, Breadcrumb, Modal, Select } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 import { useGet, useDelete } from "../../api";
@@ -37,12 +36,15 @@ export const ShowTime = () => {
 
 
   const [date, setDate] = React.useState(Dates[0].date);
-  console.log(Dates[1].date);
-  const [provinceId, setProvinceId] = React.useState("638f61dceae6921efd78e7b4");
 
+  const [provinceId, setProvinceId] = React.useState("638f61dceae6921efd78e7b4");
+  const [movieId, setMovieId] = React.useState("");
 
   const { fetchGet, result: Optionsresult } = useGet();
   const { fetchGet: fetchGetShowtime, result: showtimeResult } = useGet();
+  const { fetchGet: fetchgetMovie, result: OptionsresultMovie } = useGet();
+  const [optionsMovie, setOptionsMovie] = React.useState(undefined);
+
 
 
   const showConfirm = (id) => {
@@ -51,7 +53,7 @@ export const ShowTime = () => {
       icon: <ExclamationCircleOutlined />,
       onOk: async () => {
         await fetchDelete("showtime/" + id);
-        fetchGetShowtime(`showtime/null/${provinceId}/${date}`)
+        fetchGetShowtime(`showtime/${movieId}/${provinceId}/${date}`)
       },
       onCancel() {
         console.log("Cancel");
@@ -60,15 +62,44 @@ export const ShowTime = () => {
   };
 
   React.useEffect(() => {
+    fetchgetMovie("movie");
+    // eslint-disable-next-line
+  }, [])
+  React.useEffect(() => {
+    if (OptionsresultMovie) {
+      const newOptions = OptionsresultMovie?.map((option) => {
+        return {
+          label: option.name,
+          value: option._id,
+
+        };
+      });
+
+      const allMovie = {
+        label: "Tất cả phim",
+        value: "null"
+      }
+      newOptions.unshift(allMovie);
+      setOptionsMovie(newOptions);
+
+
+    }
+    // eslint-disable-next-line
+  }, [OptionsresultMovie]);
+
+
+
+
+  React.useEffect(() => {
     fetchGet("province");
     // eslint-disable-next-line
   }, [])
 
 
   React.useEffect(() => {
-    fetchGetShowtime(`showtime/null/${provinceId}/${date}`)
+    fetchGetShowtime(`showtime/${movieId}/${provinceId}/${date}`)
     // eslint-disable-next-line
-  }, [provinceId, date]);
+  }, [provinceId, date, movieId]);
 
 
   React.useEffect(() => {
@@ -80,7 +111,7 @@ export const ShowTime = () => {
 
   const DateClicked = (date) => {
     setDate(date);
-    setProvinceId("638f61dceae6921efd78e7b4");
+    //setProvinceId("638f61dceae6921efd78e7b4");
   }
 
   return (
@@ -93,6 +124,20 @@ export const ShowTime = () => {
           Add ShowTime
         </Button>
         <div className="p-[24px] min-h-[360px] bg-white my-[50px] mx-[200px]">
+          <div className=" mb-6">
+            <Select
+              className=" w-[500px]"
+              placeholder="Chọn tên phim"
+              filterOption={(input, option) =>
+                (option?.label ?? "")
+                  .toLowerCase()
+                  .includes(input.toLowerCase())
+
+              }
+              options={optionsMovie}
+              onChange={(value) => setMovieId(value)}
+            />
+          </div>
           <div className="border-y-4 border-black py-5">
             {Dates.map((item) => (
               <button
