@@ -16,7 +16,7 @@ const items = [
   getItem("Phim", "movie"),
   getItem("Phòng", "room"),
   getItem("Suất chiếu", "showtime"),
-  getItem("Khác hàng", "user"),
+  getItem("Khách hàng", "user"),
 ];
 export const Sider = () => {
   const [collapsed, setCollapsed] = React.useState(false);
