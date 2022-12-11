@@ -97,7 +97,14 @@ export const Movie = () => {
       render: (_, record) => {
         return (
           <div>
-
+            <Button
+              onClick={() => {
+                navigate("/movie/update/" + record._id);
+              }}
+              className="mr-2"
+            >
+              Cập nhật
+            </Button>
             <Button
               onClick={() => {
                 showConfirm(record._id);

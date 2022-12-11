@@ -17,6 +17,7 @@ import { User } from "./Pages/user/User";
 import { AddUser } from "./Pages/user/AddUser";
 import { AddShowTime } from "./Pages/showtime/AddShowTime";
 import { UpdateCinema } from "./Pages/cinema/UpdateCinema";
+import { UpdateMovie } from "./Pages/movie/UpdateMovie";
 
 const App = () => {
   return (
@@ -42,6 +43,14 @@ const App = () => {
         element={
           <PrivatePage>
             <AddMovie />
+          </PrivatePage>
+        }
+      />
+      <Route
+        path="movie/update/:id"
+        element={
+          <PrivatePage>
+            <UpdateMovie />
           </PrivatePage>
         }
       />
