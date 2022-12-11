@@ -3,9 +3,9 @@ import { useNavigate } from "react-router";
 
 export const PrivatePage = ({ children }) => {
   const navigate = useNavigate();
-  const isLogin = localStorage.getItem("email");
+  const isLogin = localStorage.getItem("token");
   React.useEffect(() => {
-    if (false) navigate("login");
+    if (!isLogin) navigate("login");
   }, [isLogin, navigate]);
 
   return children;

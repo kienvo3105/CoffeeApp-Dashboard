@@ -7,6 +7,7 @@ const openNotificationWithIcon = (type, message = "", des = "") => {
     description: des,
   });
 };
+const token = localStorage.getItem("token");
 
 export const useDelete = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -17,6 +18,9 @@ export const useDelete = () => {
     setIsError(false);
     const response = await fetch(process.env.REACT_APP_BACKEND_URL + path, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => {
         setIsLoading(false);

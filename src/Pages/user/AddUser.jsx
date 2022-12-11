@@ -4,6 +4,7 @@ import {
   Form,
   Input,
   notification,
+  Upload,
   Select,
   DatePicker,
   InputNumber,
@@ -11,9 +12,19 @@ import {
 
 import { usePost } from "../../api";
 import { Layout } from "../../Layout/Layout";
+import S3FileUpload from "react-s3";
+import { Buffer } from "buffer";
 
 Buffer.from("anything", "base64");
 window.Buffer = window.Buffer || require("buffer").Buffer;
+
+const config = {
+  bucketName: "ie104",
+  dirName: "images",
+  region: "ap-southeast-1",
+  accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY,
+  secretAccessKey: process.env.REACT_APP_S3_SECRET_KEY,
+};
 
 const genreOptions = [
   { value: "Hành động", id: 0 },
@@ -29,7 +40,8 @@ const genreOptions = [
   { value: "Thần thoại", id: 10 },
 ];
 
-export const AddMovie = () => {
+export const AddUser = () => {
+  const [imageUrl, setImageUrl] = React.useState();
   const { fetchPost, isLoading, result } = usePost();
   const openNotificationWithIcon = (type, message = "", des = "") => {
     notification[type]({
@@ -37,13 +49,24 @@ export const AddMovie = () => {
       description: des,
     });
   };
-
+  const upload = (e) => {
+    S3FileUpload.uploadFile(e.file.originFileObj, config)
+      .then((data) => {
+        console.log(data);
+        setImageUrl(data.location);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  console.log(imageUrl);
   const onFinish = (values) => {
     console.log(values.genre.toString());
 
     console.log();
-    fetchPost("movie", {
+    fetchPost("user", {
       ...values,
+      image: imageUrl,
       releaseDate: values.date._d.toISOString(),
     });
   };
@@ -135,20 +158,20 @@ export const AddMovie = () => {
                 placeholder="Chọn loại kiểm duyệt"
                 options={[
                   {
-                    label: "P - PHIM DÀNH CHO MỌI ĐỐI TƯỢNG",
-                    value: "P - PHIM DÀNH CHO MỌI ĐỐI TƯỢNG",
+                    label: "P",
+                    value: 1,
                   },
                   {
-                    label: "C13 - PHIM CẤM KHÁN GIẢ DƯỚI 13 TUỔI",
-                    value: "C13 - PHIM CẤM KHÁN GIẢ DƯỚI 13 TUỔI",
+                    label: "C13",
+                    value: 2,
                   },
                   {
-                    label: "C16 - PHIM CẤM KHÁN GIẢ DƯỚI 16 TUỔI",
-                    value: "C16 - PHIM CẤM KHÁN GIẢ DƯỚI 16 TUỔI",
+                    label: "C16",
+                    value: 3,
                   },
                   {
-                    label: "C18 - PHIM CẤM KHÁN GIẢ DƯỚI 18 TUỔI",
-                    value: "C18 - PHIM CẤM KHÁN GIẢ DƯỚI 18 TUỔI",
+                    label: "C18",
+                    value: 4,
                   },
                 ]}
               />
@@ -227,7 +250,17 @@ export const AddMovie = () => {
                 },
               ]}
             >
-              <Input placeholder="Nhập link hinh anh" />
+              <Upload showUploadList={false} name="file" onChange={upload}>
+                {imageUrl ? (
+                  <img
+                    src={imageUrl}
+                    alt="hinh anh"
+                    className="max-w-[300px]"
+                  />
+                ) : (
+                  <Button> Tải ảnh lên</Button>
+                )}
+              </Upload>
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
               <Button

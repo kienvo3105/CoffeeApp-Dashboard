@@ -1,7 +1,7 @@
 const useLocalStore = () => {
   const email = localStorage.getItem("email");
-  const name = localStorage.getItem("name");
-  return { email, name };
+
+  return { email };
 };
 
 export default useLocalStore;

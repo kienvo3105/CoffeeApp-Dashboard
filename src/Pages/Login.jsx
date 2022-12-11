@@ -7,15 +7,12 @@ export const Login = () => {
   let navigate = useNavigate();
   const { fetchPost, isLoading, isError, result } = usePost();
   const onFinish = (values) => {
-    fetchPost("auth/signin", values);
+    fetchPost("auth", values);
   };
   React.useEffect(() => {
-    if (result.Status === "success") {
-      localStorage.setItem("email", result.Data.email);
-      localStorage.setItem(
-        "name",
-        `${result.Data.first_name} ${result.Data.last_name}`
-      );
+    if (result.accessToken) {
+      localStorage.setItem("email", result.foundAdmin.email);
+      localStorage.setItem("token", result.accessToken);
       navigate("/");
     }
   }, [result, navigate]);

@@ -2,7 +2,6 @@
   "name": "lcs-new-ui",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://hv-hung.github.io/IE104-Dashboard",
   "dependencies": {
     "@tanstack/react-query": "^4.2.3",
     "@testing-library/jest-dom": "^5.16.5",
