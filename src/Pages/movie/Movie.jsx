@@ -70,18 +70,18 @@ export const Movie = () => {
       dataIndex: "rated",
       key: "rated",
     },
-    {
-      title: "Link trailer",
-      dataIndex: "trailer_url",
-      key: "trailer_url",
-      render: (value) => {
-        return (
-          <a target="_blank" rel="noreferrer" href={value}>
-            {value}
-          </a>
-        );
-      },
-    },
+    // {
+    //   title: "Link trailer",
+    //   dataIndex: "trailer_url",
+    //   key: "trailer_url",
+    //   render: (value) => {
+    //     return (
+    //       <a target="_blank" rel="noreferrer" href={value}>
+    //         {value}
+    //       </a>
+    //     );
+    //   },
+    // },
     {
       title: "Thể loại",
       dataIndex: "genre",
@@ -97,14 +97,7 @@ export const Movie = () => {
       render: (_, record) => {
         return (
           <div>
-            <Button
-              onClick={() => {
-                showConfirm(record._id);
-              }}
-              className="mr-2"
-            >
-              Cập nhật
-            </Button>
+
             <Button
               onClick={() => {
                 showConfirm(record._id);

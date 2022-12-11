@@ -137,13 +137,14 @@ export const ShowTime = () => {
               onChange={(value) => setMovieId(value)}
             />
           </div>
-          <div className="border-y-4 border-black py-5">
+          <div className="border-y-2 border-black py-5">
             {Dates.map((item) => (
               <button
                 onClick={() => DateClicked(item.date)}
                 type="button"
                 key={item.id}
-                className={`ml-5 border ${item.date === date ? "bg-sky-600" : " bg-gray-400"}  hover:bg-sky-300 text-white h-[50px] w-[100px] rounded-xl`}
+                className={`ml-12 text-[18px] font-bold hover:bg-sky-300 text-black px-[12px] py-[12px] border-sky-800 border-2 rounded-lg ${item.date === date ? "bg-sky-300" : "bg-[f2f7ff]"
+                  }`}
 
               >
                 {item.time}
@@ -157,7 +158,8 @@ export const ShowTime = () => {
                 onClick={() => setProvinceId(item._id)}
                 type="button"
                 key={item._id}
-                className={`ml-5 border ${item._id === provinceId ? "bg-sky-600" : " bg-gray-400"} hover:bg-sky-300  text-white h-[50px] w-[100px] rounded-xl`}
+                className={`ml-12 font-bold hover:bg-sky-300 text-black px-[12px] py-[12px] border-sky-800 border-2 rounded-lg text-[18px] ${item._id === provinceId ? "bg-sky-300" : "bg-[f2f7ff]"
+                  }`}
               >
                 {item.name}
               </button>
@@ -165,17 +167,17 @@ export const ShowTime = () => {
           </div>
           <div>
             {showtimeResult && showtimeResult.map((item) => (
-              <div className="border-t-2 border-slate-600 py-5 mx-[50px]">
+              <div className="border-t-2 border-black py-5">
                 <div className="text-[30px] mb-[20px]">{item?.cinema?.name}</div>
                 <Space wrap>
                   {item.showtimes.map((temp, index) => (
                     <div
 
                       key={index}
-                      className="ml-5 border bg-gray-700 hover:bg-sky-300 text-white h-[50px] w-[100px] text-center pt-3 relative"
+                      className="ml-5 font-bold text-[20px] mb-6 hover:bg-sky-300 text-black px-[12px] py-[12px] border-sky-800 border-2 h-[50px] w-[100px] text-center pt-2 relative rounded-lg"
                     >
                       {temp.time}
-                      <div onClick={() => showConfirm(temp._id)} className="cursor-pointer w-[20px] h-[20px] bg-red-500 rounded-full absolute top-[-10px] right-[-10px] text-center">x</div>
+                      <div onClick={() => showConfirm(temp._id)} className="cursor-pointer w-[20px] h-[20px] absolute top-[-15px] right-[-7px] text-[20px] ">❌</div>
                     </div>
                   ))}
                 </Space>

@@ -38,14 +38,7 @@ export const Province = () => {
       render: (_, record) => {
         return (
           <div>
-            <Button
-              onClick={() => {
-                showConfirm(record._id);
-              }}
-              className="mr-2"
-            >
-              Cập nhật
-            </Button>
+
             <Button
               onClick={() => {
                 showConfirm(record._id);
