@@ -26,7 +26,7 @@ export const Login = () => {
           </div>
         )}
         <h1 className="text-center text-[40px] mb-[30px]">
-          Learning System Center
+          UIT cinema admin
         </h1>
 
         <Form
@@ -67,7 +67,6 @@ export const Login = () => {
           <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
             <div className="flex justify-between">
               <p>Forgot password</p>
-              <p>Register</p>
             </div>
           </Form.Item>
         </Form>
