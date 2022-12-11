@@ -12,9 +12,6 @@ import {
 import { usePost } from "../../api";
 import { Layout } from "../../Layout/Layout";
 
-Buffer.from("anything", "base64");
-window.Buffer = window.Buffer || require("buffer").Buffer;
-
 const genreOptions = [
   { value: "Hành động", id: 0 },
   { value: "Tình cảm", id: 1 },
