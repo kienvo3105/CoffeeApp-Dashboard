@@ -37,7 +37,7 @@ export const Room = () => {
       title: "Rạp",
       dataIndex: "cinema",
       key: "cinema",
-      render: (cinema) => cinema.name,
+      render: (cinema) => cinema?.name,
     },
     {
       key: "action",

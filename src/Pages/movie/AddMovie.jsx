@@ -99,7 +99,6 @@ export const AddMovie = () => {
             >
               <Input placeholder="Nhập tên phim" />
             </Form.Item>
-
             <Form.Item
               label="Đạo diễn"
               name="director"
@@ -146,6 +145,38 @@ export const AddMovie = () => {
               />
             </Form.Item>
             <Form.Item
+              label="Kiểm duyệt"
+              name="rated"
+              rules={[
+                {
+                  required: true,
+                  message: "",
+                },
+              ]}
+            >
+              <Select
+                placeholder="Chọn loại kiểm duyệt"
+                options={[
+                  {
+                    label: "P",
+                    value: 1,
+                  },
+                  {
+                    label: "C13",
+                    value: 2,
+                  },
+                  {
+                    label: "C16",
+                    value: 3,
+                  },
+                  {
+                    label: "C18",
+                    value: 4,
+                  },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item
               label="Ngày khởi chiếu"
               name="date"
               rules={[
@@ -186,6 +217,30 @@ export const AddMovie = () => {
               <Input placeholder="Ngôn ngữ" />
             </Form.Item>
             <Form.Item
+              label="Link trailer"
+              name="trailer_url"
+              rules={[
+                {
+                  required: true,
+                  message: "Nhập link trailer",
+                },
+              ]}
+            >
+              <Input placeholder="Nhập trailer" />
+            </Form.Item>
+            <Form.Item
+              label="Mô tả:"
+              name="description"
+              rules={[
+                {
+                  required: true,
+                  message: "Nhập mô tả",
+                },
+              ]}
+            >
+              <Input.TextArea placeholder="mô tả" />
+            </Form.Item>
+            <Form.Item
               label="Hình ảnh"
               name="image"
               rules={[
@@ -207,7 +262,6 @@ export const AddMovie = () => {
                 )}
               </Upload>
             </Form.Item>
-
             <Form.Item wrapperCol={{ offset: 6, span: 18 }}>
               <Button
                 id="AddUser"
