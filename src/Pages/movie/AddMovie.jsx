@@ -109,7 +109,7 @@ export const AddMovie = () => {
             >
               <Select
                 mode="multiple"
-                placeholder="Chọn thể loại"
+                placeholder="Nhập tên tỉnh"
                 filterOption={(input, option) =>
                   (option?.label ?? "")
                     .toLowerCase()
