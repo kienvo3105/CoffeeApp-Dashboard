@@ -4,7 +4,6 @@ import { Layout } from "../../Layout/Layout";
 import React from "react";
 import { Button, Space, Breadcrumb, Modal, Select } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-
 import { useGet, useDelete } from "../../api";
 const Dates = [];
 for (let i = 0; i <= 6; i++) {
@@ -31,7 +30,7 @@ for (let i = 0; i <= 6; i++) {
 export const ShowTime = () => {
   let navigate = useNavigate();
   const { confirm } = Modal;
-  const { fetchDelete, isLoading: isDeleteLoading } = useDelete();
+  const { fetchDelete } = useDelete();
 
 
 
@@ -168,10 +167,9 @@ export const ShowTime = () => {
             {showtimeResult && showtimeResult.map((item) => (
               <div className="border-t-2 border-slate-600 py-5 mx-[50px]">
                 <div className="text-[30px] mb-[20px]">{item?.cinema?.name}</div>
-                <Space>
+                <Space wrap>
                   {item.showtimes.map((temp, index) => (
                     <div
-
 
                       key={index}
                       className="ml-5 border bg-gray-700 hover:bg-sky-300 text-white h-[50px] w-[100px] text-center pt-3 relative"

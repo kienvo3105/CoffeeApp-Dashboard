@@ -48,6 +48,7 @@ export const AddShowTime = () => {
     React.useEffect(() => {
         openNotificationWithIcon("success", "Thêm xuất chiếu mới thành công");
         fetchShowtime();
+        // eslint-disable-next-line
     }, [result]);
 
     React.useEffect(() => {
@@ -283,7 +284,7 @@ export const AddShowTime = () => {
                                     return (
                                         <div className="border-t-2 border-slate-600 py-2 ml-[30%] mr-0">
                                             <div className="text-[15px] mb-[5px]">Room {room.label}</div>
-                                            <Space>
+                                            <Space wrap>
                                                 {room.time.map((showtime, index) => {
                                                     return (
                                                         <div
