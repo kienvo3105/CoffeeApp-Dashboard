@@ -16,6 +16,7 @@ import { ShowTime } from "./Pages/showtime/ShowTime";
 import { User } from "./Pages/user/User";
 import { AddUser } from "./Pages/user/AddUser";
 import { AddShowTime } from "./Pages/showtime/AddShowTime";
+import { UpdateCinema } from "./Pages/cinema/UpdateCinema";
 
 const App = () => {
   return (
@@ -73,6 +74,14 @@ const App = () => {
         element={
           <PrivatePage>
             <AddCinema />
+          </PrivatePage>
+        }
+      />
+      <Route
+        path="cinema/update/:id"
+        element={
+          <PrivatePage>
+            <UpdateCinema />
           </PrivatePage>
         }
       />

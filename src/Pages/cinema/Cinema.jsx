@@ -37,6 +37,18 @@ export const Cinema = () => {
       dataIndex: "address",
       key: "address",
     },
+    {
+      title: "Linh địa chỉ",
+      dataIndex: "address_url",
+      key: "address_url",
+      render: (value) => {
+        return (
+          <a target="_blank" rel="noreferrer" href={value}>
+            {value}
+          </a>
+        );
+      },
+    },
 
     {
       title: "Tỉnh",
@@ -51,7 +63,7 @@ export const Cinema = () => {
           <div>
             <Button
               onClick={() => {
-                showConfirm(record._id);
+                navigate("/cinema/update/" + record._id);
               }}
               className="mr-2"
             >
