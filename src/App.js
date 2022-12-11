@@ -15,6 +15,7 @@ import { Room } from "./Pages/room/Room";
 import { ShowTime } from "./Pages/showtime/ShowTime";
 import { User } from "./Pages/user/User";
 import { AddUser } from "./Pages/user/AddUser";
+import { AddShowTime } from "./Pages/showtime/AddShowTime";
 
 const App = () => {
   return (
@@ -112,6 +113,15 @@ const App = () => {
         element={
           <PrivatePage>
             <ShowTime />
+          </PrivatePage>
+        }
+      />
+
+      <Route
+        path="showtime/add"
+        element={
+          <PrivatePage>
+            <AddShowTime />
           </PrivatePage>
         }
       />
