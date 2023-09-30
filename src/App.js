@@ -18,7 +18,8 @@ import { AddUser } from "./Pages/user/AddUser";
 import { AddShowTime } from "./Pages/showtime/AddShowTime";
 import { UpdateCinema } from "./Pages/cinema/UpdateCinema";
 import { UpdateMovie } from "./Pages/movie/UpdateMovie";
-
+import { Branch } from "./Pages/branch/Branch";
+import { AddBranch } from "./Pages/branch/AddBranch";
 const App = () => {
   return (
     <Routes>
@@ -140,6 +141,24 @@ const App = () => {
         element={
           <PrivatePage>
             <AddShowTime />
+          </PrivatePage>
+        }
+      />
+
+      <Route
+        path="branch"
+        element={
+          <PrivatePage>
+            <Branch />
+          </PrivatePage>
+        }
+      />
+
+      <Route
+        path="branch/add"
+        element={
+          <PrivatePage>
+            <AddBranch />
           </PrivatePage>
         }
       />
