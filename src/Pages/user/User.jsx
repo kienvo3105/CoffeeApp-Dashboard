@@ -2,12 +2,12 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Breadcrumb, Table, Button, Modal } from "antd";
 import React from "react";
 import { useGet, useDelete } from "../../api";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import { Layout } from "../../Layout/Layout";
 
 export const User = () => {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   const { confirm } = Modal;
   const { fetchGet, isLoading, result } = useGet();
   const { fetchDelete, isLoading: isDeleteLoading } = useDelete();

@@ -37,7 +37,7 @@ export const AddMovie = () => {
 
   const onFinish = (values) => {
     console.log(values.genre.toString());
-
+    console.log(values.image)
     console.log();
     fetchPost("movie", {
       ...values,
