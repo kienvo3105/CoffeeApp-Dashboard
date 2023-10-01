@@ -11,11 +11,7 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem("Tỉnh", "province"),
-  getItem("Rạp chiếu", "cinema"),
-  getItem("Phim", "movie"),
-  getItem("Phòng", "room"),
-  getItem("Suất chiếu", "showtime"),
+  getItem("Quản lý", "manager"),
   getItem("Khách hàng", "user"),
   getItem("Chi nhánh", "branch")
 ];
@@ -39,20 +35,8 @@ export const Sider = () => {
         items={items}
         onClick={(item) => {
           switch (item.key) {
-            case "movie":
-              navigate("/movie");
-              break;
-            case "province":
-              navigate("/province");
-              break;
-            case "cinema":
-              navigate("/cinema");
-              break;
-            case "room":
-              navigate("/room");
-              break;
-            case "showtime":
-              navigate("/showtime");
+            case "manager":
+              navigate("/manager");
               break;
             case "user":
               navigate("/user");
@@ -61,7 +45,7 @@ export const Sider = () => {
               navigate("/branch");
               break;
             default:
-              navigate("/movie");
+              navigate("/user");
           }
         }}
       />

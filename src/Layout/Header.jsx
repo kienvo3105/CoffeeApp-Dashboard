@@ -40,7 +40,7 @@ export const Header = () => {
       <div className="flex justify-between items-center w-full max-h-[64px]">
         <div className="flex justify-between items-center w-[400px]">
           <div className="flex justify-between font-bold text-[32px] text-center  text-[white]  ">
-            UIT
+            KM Coffee
           </div>
         </div>
 

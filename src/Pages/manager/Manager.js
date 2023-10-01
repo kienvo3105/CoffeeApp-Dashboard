@@ -2,23 +2,25 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Breadcrumb, Table, Button, Modal } from "antd";
 import React from "react";
 import { useGet, useDelete } from "../../api";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import { Layout } from "../../Layout/Layout";
 
-export const Branch = () => {
-    let navigate = useNavigate();
+export const Manager = () => {
+    // let navigate = useNavigate();
     const { confirm } = Modal;
     const { fetchGet, isLoading, result } = useGet();
     const { fetchDelete, isLoading: isDeleteLoading } = useDelete();
 
+
+
     const showConfirm = (id) => {
         confirm({
-            title: "Do you Want to delete this branch?",
+            title: "Bạn có muốn khóa tài khoản này không?",
             icon: <ExclamationCircleOutlined />,
             onOk: async () => {
-                await fetchDelete("branch/" + id);
-                fetchGet("branch");
+                await fetchDelete("user/" + id);
+                fetchGet("user");
             },
             onCancel() {
                 console.log("Cancel");
@@ -28,33 +30,24 @@ export const Branch = () => {
 
     const columns = [
         {
+            title: "Họ",
+            dataIndex: "lastName",
+            key: "lastName",
+        },
+        {
             title: "Tên",
-            dataIndex: "name",
-            key: "name",
+            dataIndex: "firstName",
+            key: "firstName",
         },
         {
-            title: "Địa chỉ",
-            dataIndex: "address",
-            key: "address",
+            title: "Email",
+            dataIndex: "email",
+            key: "email",
         },
         {
-            title: "Linh địa chỉ",
-            dataIndex: "address_url",
-            key: "address_url",
-            render: (value) => {
-                return (
-                    <a target="_blank" rel="noreferrer" href={value}>
-                        {value}
-                    </a>
-                );
-            },
-        },
-
-        {
-            title: "Tỉnh",
-            dataIndex: "province",
-            key: "province",
-            render: (province) => province?.name,
+            title: "Số điện thoại",
+            dataIndex: "phoneNumber",
+            key: "phoneNumber",
         },
         {
             key: "action",
@@ -63,18 +56,10 @@ export const Branch = () => {
                     <div>
                         <Button
                             onClick={() => {
-                                navigate("/cinema/update/" + record._id);
-                            }}
-                            className="mr-2"
-                        >
-                            Cập nhật
-                        </Button>
-                        <Button
-                            onClick={() => {
                                 showConfirm(record._id);
                             }}
                         >
-                            Xóa
+                            Khóa
                         </Button>
                     </div>
                 );
@@ -82,25 +67,23 @@ export const Branch = () => {
         },
     ];
     React.useEffect(() => {
-        // fetchGet("branch");
+        fetchGet("manager");
         // eslint-disable-next-line
     }, []);
 
     return (
         <Layout>
             <Breadcrumb style={{ marginLeft: "16px" }}>
-                <Breadcrumb.Item>Branch</Breadcrumb.Item>
+                <Breadcrumb.Item>Manager</Breadcrumb.Item>
             </Breadcrumb>
             <div className="p-[24px] min-h-[360px] bg-white m-[24px]">
-                <Button onClick={() => navigate("/branch/add")} type="primary" danger>
-                    Add Branch
-                </Button>
                 <div>
                     {result && (
                         <Table
                             loading={isLoading || isDeleteLoading}
                             columns={columns}
-                            dataSource={result.error ? null : result}
+                            dataSource={result.errorCode ? null : result?.managers}
+                            rowKey="id"
                         />
                     )}
                 </div>

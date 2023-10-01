@@ -10,10 +10,7 @@ export const Login = () => {
     fetchPost("auth", values);
   };
   React.useEffect(() => {
-    // if (result.accessToken) {
-    console.log("🚀 ~ file: Login.jsx:15 ~ React.useEffect ~ result.accessToken:", result.accessToken)
     if (result.accessToken) {
-
       localStorage.setItem("email", result.foundAdmin.email);
       localStorage.setItem("token", result.accessToken);
       navigate("/");
@@ -29,7 +26,7 @@ export const Login = () => {
           </div>
         )}
         <h1 className="text-center text-[40px] mb-[30px]">
-          UIT cinema admin
+          CoffeeApp admin
         </h1>
 
         <Form

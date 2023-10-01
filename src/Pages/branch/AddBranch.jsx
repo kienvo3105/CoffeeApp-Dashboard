@@ -16,7 +16,7 @@ export const AddBranch = () => {
     };
     const onFinish = (values) => {
         console.log();
-        fetchPost("cinema", {
+        fetchPost("branch", {
             ...values,
         });
     };
@@ -47,7 +47,7 @@ export const AddBranch = () => {
             <div className="relative w-full min-h-screen m-0 p-0 bg-[#e5e7eb]">
                 <div className=" m-5  left-0 pt-[100px] pb-[100px] pl-[50px] pr-[50px] bg-[white]">
                     <Form
-                        name="AddCinema"
+                        name="AddBranch"
                         labelCol={{ span: 6 }}
                         wrapperCol={{ span: 18 }}
                         initialValues={{ remember: true }}
