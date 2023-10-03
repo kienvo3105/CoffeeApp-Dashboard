@@ -9,6 +9,7 @@ import { AddBranch } from "./Pages/branch/AddBranch";
 import { User } from "./Pages/user/User";
 import { AddUser } from "./Pages/user/AddUser";
 import { Manager } from "./Pages/manager/Manager";
+import { AddManager } from "./Pages/manager/AddManager";
 const App = () => {
   return (
     <Routes>
@@ -29,6 +30,15 @@ const App = () => {
           </PrivatePage>
         }
       />
+      <Route
+        path="manager/add"
+        element={
+          <PrivatePage>
+            <AddManager />
+          </PrivatePage>
+        }
+      />
+
 
       <Route
         path="user"

@@ -38,7 +38,7 @@ export const Branch = () => {
             key: "address",
         },
         {
-            title: "Linh địa chỉ",
+            title: "Link địa chỉ",
             dataIndex: "address_url",
             key: "address_url",
             render: (value) => {
@@ -56,30 +56,30 @@ export const Branch = () => {
             key: "province",
             render: (province) => province?.name,
         },
-        {
-            key: "action",
-            render: (_, record) => {
-                return (
-                    <div>
-                        <Button
-                            onClick={() => {
-                                navigate("/cinema/update/" + record._id);
-                            }}
-                            className="mr-2"
-                        >
-                            Cập nhật
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                showConfirm(record._id);
-                            }}
-                        >
-                            Xóa
-                        </Button>
-                    </div>
-                );
-            },
-        },
+        // {
+        //     key: "action",
+        //     render: (_, record) => {
+        //         return (
+        //             <div>
+        //                 <Button
+        //                     onClick={() => {
+        //                         navigate("/cinema/update/" + record._id);
+        //                     }}
+        //                     className="mr-2"
+        //                 >
+        //                     Cập nhật
+        //                 </Button>
+        //                 <Button
+        //                     onClick={() => {
+        //                         showConfirm(record._id);
+        //                     }}
+        //                 >
+        //                     Xóa
+        //                 </Button>
+        //             </div>
+        //         );
+        //     },
+        // },
     ];
     React.useEffect(() => {
         // fetchGet("branch");
@@ -103,6 +103,7 @@ export const Branch = () => {
                             dataSource={result.error ? null : result}
                         />
                     )}
+
                 </div>
             </div>
         </Layout>

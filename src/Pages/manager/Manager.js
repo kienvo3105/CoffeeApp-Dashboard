@@ -2,12 +2,12 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { Breadcrumb, Table, Button, Modal } from "antd";
 import React from "react";
 import { useGet, useDelete } from "../../api";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Layout } from "../../Layout/Layout";
 
 export const Manager = () => {
-    // let navigate = useNavigate();
+    let navigate = useNavigate();
     const { confirm } = Modal;
     const { fetchGet, isLoading, result } = useGet();
     const { fetchDelete, isLoading: isDeleteLoading } = useDelete();
@@ -77,6 +77,9 @@ export const Manager = () => {
                 <Breadcrumb.Item>Manager</Breadcrumb.Item>
             </Breadcrumb>
             <div className="p-[24px] min-h-[360px] bg-white m-[24px]">
+                <Button onClick={() => navigate("/manager/add")} type="primary" danger>
+                    Add Manager
+                </Button>
                 <div>
                     {result && (
                         <Table
